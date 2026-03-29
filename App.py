@@ -202,7 +202,7 @@ elif page == "All Inputs":
     if st.button("Submit All Inputs"):
         st.success("✅ Inputs Submitted Successfully!")
 
-        st.write("### 📌 Summary of Inputs")
+        st.write("### Summary of Inputs")
         st.write(f"Name: {name}")
         st.write(f"Age: {age}")
         st.write(f"Budget: ₹{price}")
