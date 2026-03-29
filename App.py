@@ -66,7 +66,7 @@ elif page == "Dashboard":
         st.write("### Dataset Preview")
         st.dataframe(df.head())
         st.write("### Dataset's Basic Descriptive Statistic  ### ")
-        st.write(df.decribe())
+        st.write(df.describe())
     # -------------------------
     # TAB 2: CHARTS
     # -------------------------
