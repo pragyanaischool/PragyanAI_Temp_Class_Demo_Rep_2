@@ -23,3 +23,12 @@ if os.path.exists(file_path):
 else:
     st.error("❌ Dataset not found")
     st.stop()
+# -----------------------------
+# SIDEBAR NAVIGATION
+# -----------------------------
+st.sidebar.title(" Navigation Project Menu")
+
+page = st.sidebar.radio(
+    "Go to",
+    [" Home", "Dashboard", "Form", "Session State", "All Inputs","Advanced Media"]
+)
