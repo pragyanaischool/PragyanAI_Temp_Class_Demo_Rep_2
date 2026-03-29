@@ -211,3 +211,168 @@ elif page == "All Inputs":
         st.write(f"Gender: {gender}")
         st.write(f"Agreed: {agree}")
         st.write(f"Date: {date}")
+# =============================
+# 🎬 ADVANCED MEDIA & AI PAGE
+# =============================
+elif page == "Advanced Media":
+
+    st.subheader("Advanced Media & AI Features")
+
+    # =====================================
+    # 🖼️ IMAGE UPLOAD & DISPLAY
+    # =====================================
+    st.write("## Image Upload")
+
+    image_file = st.file_uploader("Upload an Image", type=["png", "jpg", "jpeg"])
+
+    if image_file:
+        st.image(image_file, caption="Uploaded Image", use_container_width=True)
+
+    # =====================================
+    # 🎵 AUDIO UPLOAD & PLAY
+    # =====================================
+    st.write("## Audio Upload & Play")
+
+    audio_file = st.file_uploader("Upload Audio", type=["mp3", "wav","m4a"])
+
+    if audio_file:
+        st.audio(audio_file)
+
+    # =====================================
+    # 🎥 VIDEO DISPLAY (YouTube)
+    # =====================================
+    st.write("## YouTube Video")
+
+    video_url = st.text_input("Enter YouTube URL")
+
+    if video_url:
+        st.video(video_url)
+
+    st.subheader("💬 AI Chat Assistant (Groq Powered)")
+
+    # -----------------------------
+    # Initialize Groq Client
+    # -----------------------------
+    GROQ_API_KEY = st.secrets.get("GROQ_API_KEY", None)
+
+    if not GROQ_API_KEY:
+        st.error("❌ GROQ API Key not found in secrets")
+        st.stop()
+
+    client = Groq(api_key=GROQ_API_KEY)
+
+    # -----------------------------
+    # Session State for Chat Memory
+    # -----------------------------
+    if "messages" not in st.session_state:
+        st.session_state.messages = []
+
+    # -----------------------------
+    # Display Chat History
+    # -----------------------------
+    for msg in st.session_state.messages:
+        with st.chat_message(msg["role"]):
+            st.write(msg["content"])
+
+    # -----------------------------
+    # User Input
+    # -----------------------------
+    user_input = st.chat_input("Ask anything about data, pricing, AI...")
+
+    if user_input:
+
+        # Add user message
+        st.session_state.messages.append({
+            "role": "user",
+            "content": user_input
+        })
+
+        with st.chat_message("user"):
+            st.write(user_input)
+
+        # -----------------------------
+        # SYSTEM PROMPT (VERY IMPORTANT)
+        # -----------------------------
+        system_prompt = """
+        You are an AI Data Analytics Assistant for PragyanAI.
+        Help users understand data, pricing, conversions, and insights.
+        Give clear, concise, and actionable answers.
+        """
+
+        # -----------------------------
+        # Call Groq LLM
+        # -----------------------------
+        try:
+            response = client.chat.completions.create(
+                model="openai/gpt-oss-120b",  # fast + powerful
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    *st.session_state.messages
+                ],
+                temperature=0.3
+            )
+
+            bot_reply = response.choices[0].message.content
+
+        except Exception as e:
+            bot_reply = f"❌ Error: {str(e)}"
+
+        # -----------------------------
+        # Store Assistant Response
+        # -----------------------------
+        st.session_state.messages.append({
+            "role": "assistant",
+            "content": bot_reply
+        })
+
+        # -----------------------------
+        # Display Response
+        # -----------------------------
+        with st.chat_message("assistant"):
+            st.write(bot_reply)
+
+    # =====================================
+    # 🎤 AUDIO RECORD (MIC INPUT - BROWSER BASED)
+    # =====================================
+    st.write("## Voice Input (Experimental)")
+
+    try:
+        audio_value = st.audio_input("Record your voice")
+
+        if audio_value:
+            st.audio(audio_value)
+            st.success("Voice recorded successfully!")
+    except:
+        st.info("Audio recording not supported in this environment")
+
+    # =====================================
+    # 📥 DOWNLOAD BUTTON
+    # =====================================
+    st.write("## Download Sample Report")
+
+    sample_text = "PragyanAI Report Generated"
+
+    st.download_button(
+        label="Download Report",
+        data=sample_text,
+        file_name="report.txt",
+        mime="text/plain"
+    )
+
+    # =====================================
+    # 📦 EXPANDER (ADVANCED UI)
+    # =====================================
+    with st.expander("More Advanced Options"):
+        st.write("This section can contain advanced analytics or settings")
+
+    # =====================================
+    # 🎨 PROGRESS BAR
+    # =====================================
+    st.write("## Progress Indicator")
+
+    progress = st.progress(0)
+
+    for i in range(100):
+        progress.progress(i + 1)
+
+    st.success("Task Completed!")
