@@ -39,4 +39,4 @@ page = st.sidebar.radio(
 if page == "Home":
     st.subheader("Welcome to PragyanAI Dashboard")
     st.write("This app demonstrates all major Streamlit UI features")
-    st.image()
+    st.image("PragyanAI_Transperent.png")
