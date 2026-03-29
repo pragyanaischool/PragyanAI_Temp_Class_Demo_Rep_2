@@ -50,3 +50,43 @@ if page == "Home":
     if uploaded_file:
         df = pd.read_csv(uploaded_file)    
     st.success("✅ Data Loaded Successfully")
+# =============================
+# 📊 DASHBOARD (TABS)
+# =============================
+elif page == "Dashboard":
+
+    st.subheader(" Data Analytics Dashboard")
+
+    tab1, tab2, tab3 = st.tabs([" Data", " Charts", " KPIs"])
+
+    # -------------------------
+    # TAB 1: DATA
+    # -------------------------
+    with tab1:
+        st.write("### Dataset Preview")
+        st.dataframe(df.head())
+        st.write("### Dataset's Basic Descriptive Statistic  ### ")
+        st.write(df.decribe())
+    # -------------------------
+    # TAB 2: CHARTS
+    # -------------------------
+    with tab2:
+        st.write("### Revenue Trend")
+        st.line_chart(df["Revenue"])
+
+        st.write("### Revenue by Program")
+        st.bar_chart(df.groupby("Program_Type")["Revenue"].sum())
+
+    # -------------------------
+    # TAB 3: KPIs
+    # -------------------------
+    with tab3:
+        col1, col2, col3 = st.columns(3)
+
+        total_students = len(df)
+        avg_price = df["Final_Price"].mean()
+        conversion_rate = df["Converted"].mean() * 100
+
+        col1.metric("Total Students", total_students)
+        col2.metric("Avg Price", f"₹{avg_price:,.0f}")
+        col3.metric("Conversion Rate", f"{conversion_rate:.2f}%")
