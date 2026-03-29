@@ -104,4 +104,4 @@ elif page == "Form":
         submitted = st.form_submit_button("Submit")
 
     if submitted:
-        st.success(f"✅ Student {name} scored {marks}")
+        st.success(f"✅ Student {name} with {age} years age has scored {marks}")
