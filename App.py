@@ -90,3 +90,18 @@ elif page == "Dashboard":
         col1.metric("Total Students", total_students)
         col2.metric("Avg Price", f"₹{avg_price:,.0f}")
         col3.metric("Conversion Rate", f"{conversion_rate:.2f}%")
+# =============================
+# 📝 FORM PAGE
+# =============================
+elif page == "Form":
+
+    st.subheader("📝 Student Input Form")
+
+    with st.form("student_form"):
+        name = st.text_input("Enter Name")
+        marks = st.number_input("Enter Marks", 0, 100)
+        age = st.slider("Enter Age", 0, 100, 25)
+        submitted = st.form_submit_button("Submit")
+
+    if submitted:
+        st.success(f"✅ Student {name} scored {marks}")
