@@ -95,7 +95,7 @@ elif page == "Dashboard":
 # =============================
 elif page == "Form":
 
-    st.subheader("📝 Student Input Form")
+    st.subheader(" Student Input Form")
 
     with st.form("student_form"):
         name = st.text_input("Enter Name")
@@ -105,3 +105,24 @@ elif page == "Form":
 
     if submitted:
         st.success(f"✅ Student {name} with {age} years age has scored {marks}")
+# =============================
+# 🧠 SESSION STATE PAGE
+# =============================
+elif page == "Session State":
+
+    st.subheader(" Session State Counter")
+
+    if "count" not in st.session_state:
+        st.session_state.count = 0
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+        if st.button("Increase"):
+            st.session_state.count += 1
+
+    with col2:
+        if st.button("Reset"):
+            st.session_state.count = 0
+
+    st.write("### Current Count:", st.session_state.count)
