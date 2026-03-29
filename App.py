@@ -40,3 +40,13 @@ if page == "Home":
     st.subheader("Welcome to PragyanAI Dashboard")
     st.write("This app demonstrates all major Streamlit UI features")
     st.image("PragyanAI_Transperent.png")
+    # -----------------------------
+    # SAFE DATA LOADING
+    # -----------------------------
+    uploaded_file = st.file_uploader("Upload CSV (Recommended)", type=["csv"])
+    @st.cache_data
+    def load_data(path):
+        return pd.read_csv(path)
+    if uploaded_file:
+        df = pd.read_csv(uploaded_file)    
+    st.success("✅ Data Loaded Successfully")
