@@ -130,3 +130,84 @@ elif page == "Session State":
             st.session_state.count = 0
 
     st.write("### Current Count:", st.session_state.count)
+
+# =============================
+# 🎛️ ALL INPUTS PAGE
+# =============================
+elif page == "All Inputs":
+
+    st.subheader(" Streamlit All Input Widgets Playground")
+
+    st.write("👉 This page demonstrates all types of user inputs in Streamlit")
+
+    # -------------------------
+    # TEXT INPUT
+    # -------------------------
+    name = st.text_input("Enter your name")
+
+    # -------------------------
+    # NUMBER INPUT
+    # -------------------------
+    age = st.number_input("Enter your age", min_value=1, max_value=100, value=18)
+
+    # -------------------------
+    # SLIDER
+    # -------------------------
+    price = st.slider("Select Budget", 1000, 100000, 5000)
+
+    # -------------------------
+    # SELECTBOX
+    # -------------------------
+    program = st.selectbox(
+        "Choose Program",
+        options=df["Program_Type"].unique()
+    )
+
+    # -------------------------
+    # MULTISELECT
+    # -------------------------
+    programs = st.multiselect(
+        "Select Multiple Programs",
+        options=df["Program_Type"].unique()
+    )
+
+    # -------------------------
+    # RADIO BUTTON
+    # -------------------------
+    gender = st.radio("Select Gender", ["Male", "Female", "Other"])
+
+    # -------------------------
+    # CHECKBOX
+    # -------------------------
+    agree = st.checkbox("I agree to terms & conditions")
+
+    # -------------------------
+    # DATE INPUT
+    # -------------------------
+    date = st.date_input("Select Date")
+
+    # -------------------------
+    # FILE UPLOADER
+    # -------------------------
+    uploaded_file = st.file_uploader("Upload a CSV File", type=["csv"])
+
+    if uploaded_file:
+        uploaded_df = pd.read_csv(uploaded_file)
+        st.write("Uploaded Data Preview")
+        st.dataframe(uploaded_df.head())
+
+    # -------------------------
+    # BUTTON
+    # -------------------------
+    if st.button("Submit All Inputs"):
+        st.success("✅ Inputs Submitted Successfully!")
+
+        st.write("### 📌 Summary of Inputs")
+        st.write(f"Name: {name}")
+        st.write(f"Age: {age}")
+        st.write(f"Budget: ₹{price}")
+        st.write(f"Program: {program}")
+        st.write(f"Selected Programs: {programs}")
+        st.write(f"Gender: {gender}")
+        st.write(f"Agreed: {agree}")
+        st.write(f"Date: {date}")
