@@ -30,5 +30,13 @@ st.sidebar.title(" Navigation Project Menu")
 
 page = st.sidebar.radio(
     "Go to",
-    [" Home", "Dashboard", "Form", "Session State", "All Inputs","Advanced Media"]
+    ["Home", "Dashboard", "Form", "Session State", "All Inputs","Advanced Media"]
 )
+
+# =============================
+# 🏠 HOME
+# =============================
+if page == "Home":
+    st.subheader("Welcome to PragyanAI Dashboard")
+    st.write("This app demonstrates all major Streamlit UI features")
+    st.image()
